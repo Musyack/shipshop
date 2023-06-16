@@ -24,7 +24,7 @@ import {
 } from '../constants/productConstants'
 import { logout } from './userActions'
 
-export const listProducts = (keyword = '', pageNumber = '') => async (
+export const listProducts = (keyword = '', pageNumber = '', filter = '') => async (
   dispatch
 ) => {
   try {
@@ -34,6 +34,67 @@ export const listProducts = (keyword = '', pageNumber = '') => async (
       `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     )
 
+    if (filter){
+          if (filter === 'high') {
+            data.products.sort((a, b) => {
+              if (a.price > b.price) {
+                return 1;
+              }
+              if (a.price < b.price) {
+                return -1;
+              }
+              // a должно быть равным b
+              return 0;
+            })
+          }
+
+          else if (filter === 'low'){
+            data.products.sort((a, b) => {
+              if (a.price > b.price) {
+                return -1;
+              }
+              if (a.price < b.price) {
+                return 1;
+              }
+              // a должно быть равным b
+              return 0;
+            })
+          } else if(filter === 'alpha') {
+            data.products.sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              // a должно быть равным b
+              return 0;
+            })
+          }
+    }
+
+    // function isGood(item){
+    //   if (item.price >= prices[0] && item.price <= prices[1]){
+    //     return false
+    //   }
+    //   else{
+    //     return false
+    //   }
+    // }
+    // let newArr = JSON.parse(JSON.stringify(data.products))
+    //
+    // newArr.forEach((item, i) => {
+    //   if (!(item.price >= prices[0] && item.price <= prices[1])){
+    //     let index = data.products.findIndex(el => el._id = item._id)
+    //     data.products.splice(index, 1)
+    //     console.log(index)
+    //   }
+    //
+    //
+    //
+    //
+    // })
+    // console.log(data.products)
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,

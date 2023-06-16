@@ -1,9 +1,12 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
-
+import TelegramApi from "node-telegram-bot-api"
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
+const token = '5789548198:AAHfgKwdZYdUp9D7UgwVBsV-LbJfF5IE30s'
+const bot = new TelegramApi(token, {polling: true})
+
 const addOrderItems = asyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -14,7 +17,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
     shippingPrice,
     totalPrice,
   } = req.body
-
+  console.log(shippingAddress)
+  console.log(orderItems)
   if (orderItems && orderItems.length === 0) {
     res.status(400)
     throw new Error('No order items')
@@ -31,7 +35,12 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     })
 
+
     const createdOrder = await order.save()
+    let message = `🤟🏿🤟🏿🤟🏿Новый заказ!🤟🏿🤟🏿🤟🏿\n👤ID Пользователя: ${req.user._id}\n👟Заказ: ${orderItems.map(item => item.name)}\n💸Сумма заказа: ${totalPrice}\n📱Номер телефона: ${shippingAddress.phone}\n📫Email: ${shippingAddress.email}\n👩‍🦰Имя: ${shippingAddress.name}\n👩‍🦰Фамилия: ${shippingAddress.surname}\n🌃Область: ${shippingAddress.region}\n🏘Город: ${shippingAddress.city}\n🏡Улица: ${shippingAddress.street}\n🏠Дом: ${shippingAddress.house}\n💌Комментарий к заказу: ${shippingAddress.comment ? shippingAddress.comment : "Нету комментария нахуй"}`
+    await bot.sendMessage('-1001947162570', message)
+
+
 
     res.status(201).json(createdOrder)
   }

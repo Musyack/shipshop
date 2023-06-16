@@ -1,0 +1,24 @@
+
+
+@font-face {
+	font-family: 'Liberation Sans';
+
+	src: url('../fonts/LiberationSans/LiberationSans.eot');
+
+	src: local('Liberation Sans'), local('LiberationSans'),
+		url('../fonts/LiberationSans/LiberationSans.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/LiberationSans/LiberationSans.woff') format('woff'),
+		url('../fonts/LiberationSans/LiberationSans.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'NAMU';
+	src: url('../fonts/NAMU/namu_pro.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/NAMU/namu_pro.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/NAMU/namu_pro.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/NAMU/namu_pro.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/NAMU/namu_pro.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/NAMU/namu_pro.svg#namu_pro') format('svg'); /* Chrome < 4, Legacy iOS */
+}

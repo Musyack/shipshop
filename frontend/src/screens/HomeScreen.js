@@ -9,6 +9,8 @@ import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
 import Meta from '../components/Meta'
 import { listProducts } from '../actions/productActions'
+import Navigation from "../components/Navigation";
+import HomeBlock from "../components/HomeBlock";
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword
@@ -26,35 +28,39 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
+      <HomeBlock/>
       <Meta />
-      {!keyword ? (
-        <ProductCarousel />
-      ) : (
-        <Link to='/' className='btn btn-light'>
-          Go Back
-        </Link>
-      )}
-      <h1>Latest Products</h1>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : (
-        <>
-          <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
+
+
+
+        <div className={'block_block'}>
+
+                <div className="block_four_header" style={{paddingBottom: '3%'}}>
+                    <div className="block_four_header_text">Популярные</div>
+                    <div className="block_four_header_link">Все популярные кроссовки</div>
+                </div>
+
+          {loading ? (
+              <Loader/>
+          ) : error ? (
+              <Message variant={'danger'}>{error}</Message>
+          ) : (
+              <Row>
+                {products.map((product) => (
+                    <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                      <Product product={product} />
+                    </Col>
+                ))}
+              </Row>
+          )}
           <Paginate
             pages={pages}
             page={page}
             keyword={keyword ? keyword : ''}
           />
-        </>
-      )}
+
+        </div>
+
     </>
   )
 }

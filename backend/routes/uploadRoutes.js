@@ -9,14 +9,14 @@ const storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+        null,
+        `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
     )
   },
 })
 
 function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/
+  const filetypes = /jpg|jpeg|png|doc|docx|pdf/
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
   const mimetype = filetypes.test(file.mimetype)
 
@@ -32,10 +32,13 @@ const upload = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb)
   },
-})
+}).array('image', 70)
 
-router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`)
+router.post('/', upload, (req, res) => {
+  const newArr = req.files.map((item, i) => {
+    return item.path
+  })
+  res.send(newArr)
 })
 
 export default router
